@@ -138,6 +138,21 @@ function isParenBalanced(string, stack){
   return true;
 }
 
+function sortStack(){
+  
+}
+
+function queueWithTwoStack(inStack, outStack){
+  for(let i = 0; i< 10; i++){
+    inStack.push(i);
+  }
+  let inStackPointer = inStack.top;
+  while(inStackPointer !== null){
+    outStack.push(inStackPointer.data);
+    inStackPointer = inStackPointer.next;
+  }
+  return outStack;
+}
 ///////////////////////////////////////////Testing ////////////////////////////////////
 // console.log('////////////////////////');
 // console.log('Stack');
@@ -175,9 +190,16 @@ function isParenBalanced(string, stack){
 // console.log(isPalindrome('1001',s1));
 // console.log(isPalindrome('10011',s1));
 
+// console.log('////////////////////////');
+// console.log('Stack Paren');
+// console.log('////////////////////////');
+// const s2 = new Stack();
+// console.log(isParenBalanced('(())', s2));
+// console.log(isParenBalanced('{([({})])}', s2));
+
 console.log('////////////////////////');
-console.log('Stack Paren');
+console.log('Stack Queue');
 console.log('////////////////////////');
-const s2 = new Stack();
-console.log(isParenBalanced('(())', s2));
-console.log(isParenBalanced('{([({})])}', s2));
+const s3 = new Stack();
+const s4 = new Stack();
+console.log(queueWithTwoStack(s3, s4));

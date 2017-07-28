@@ -178,5 +178,5 @@ function bankSimulation(arr, queue){
 // squareDancing(arr1,q2);
 
 const q4 = new Queue();
-const arr2 = [0,1,2,3,4,5];
+const arr2 = [0,1,2,3,4,5,6];
 bankSimulation(arr2 ,q4);
