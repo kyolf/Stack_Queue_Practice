@@ -109,18 +109,16 @@ function bankSimulation(arr, queue){
       console.log(`Customer ${arr[i]} provided correct documents`);
     }
   }
-  let queueInc = queue.first;
-  while(queueInc !== null){
+
+  while(queue.first !== null){
     if(Math.random() <= 0.25 ){
       const failCustomer = queue.dequeue();
       console.log(`Customer ${failCustomer} fail to provide correct documents`);
       queue.enqueue(failCustomer);
-      queueInc = queue.first;
     }
     else{
       const successCustomer = queue.dequeue();
       console.log(`Customer ${successCustomer} provided correct documents`);
-      queueInc = queue.first;
     }
     
   }

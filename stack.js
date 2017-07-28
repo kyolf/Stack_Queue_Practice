@@ -138,8 +138,15 @@ function isParenBalanced(string, stack){
   return true;
 }
 
-function sortStack(){
-  
+function sortStack(needSortStack){
+  const tempStack = new Stack();
+  let temp;
+  //let stackSortPointer = needSortStack.first;
+  while(needSortStack.first !== null){
+    if(!peek(tempStack)){
+      
+    }
+  }
 }
 
 function queueWithTwoStack(inStack, outStack){
@@ -203,3 +210,12 @@ console.log('////////////////////////');
 const s3 = new Stack();
 const s4 = new Stack();
 console.log(queueWithTwoStack(s3, s4));
+
+console.log('////////////////////////');
+console.log('Stack Sort');
+console.log('////////////////////////');
+const s5 = new Stack();
+s5.push(3);
+s5.push(1);
+s5.push(2);
+s5.push(4);
