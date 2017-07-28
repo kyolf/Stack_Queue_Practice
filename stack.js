@@ -52,6 +52,42 @@ function displayStack(stack){
   console.log(node.data);
 }
 
+// function isPalindrome(string,stack){
+//   let reverseStr = '';
+//   const lowerCaseStr = string.toLowerCase().replace(/[^a-z]/g, "");
+//   for(let i = 0 ; i< lowerCaseStr.length; i++){
+//     const char = lowerCaseStr.charAt(i);
+//     stack.push(char);
+//   }
+//   let node = stack.top;
+//   while(node !== null){
+//     reverseStr += stack.pop();
+//     node = node.next;
+//   }
+//   console.log(reverseStr);
+//   if(reverseStr === lowerCaseStr){
+//     return true;
+//   }
+//   return false;
+// }
+
+function isPalindrome(string, stack){
+  const lowerCaseStr = string.toLowerCase().replace(/[^a-z0-9]/g, "");
+  for(let i = 0 ; i< lowerCaseStr.length; i++){
+    const char = lowerCaseStr.charAt(i);
+    stack.push(char);
+  }
+  console.log(lowerCaseStr);
+  for(let i = 0; i< lowerCaseStr.length; i++){
+    const char = lowerCaseStr.charAt(i);
+    if(char !== stack.pop()){
+      return false;
+    }
+  }
+  return true;
+}
+
+///////////////////////////////////////////Testing ////////////////////////////////////
 console.log('////////////////////////');
 console.log('Stack');
 console.log('////////////////////////');
@@ -78,3 +114,12 @@ console.log('////////////////////////');
 console.log('Stack Display');
 console.log('////////////////////////');
 console.log(displayStack(s));
+
+console.log('////////////////////////');
+console.log('Stack Palindrome');
+console.log('////////////////////////');
+const s1 = new Stack();
+console.log(isPalindrome('dad',s1));
+console.log(isPalindrome('A man a plan a canal Panama', s1));
+console.log(isPalindrome('1001',s1));
+console.log(isPalindrome('10011',s1));
