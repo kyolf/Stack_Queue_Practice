@@ -33,7 +33,8 @@ class Stack{
 
 function peek(stack){
   if(stack.top === null){
-    throw new Error('Empty list');
+    console.log('Empty list');
+    return null;
   }
   return stack.top.data;
 }
@@ -54,17 +55,16 @@ function displayStack(stack){
 
 // function isPalindrome(string,stack){
 //   let reverseStr = '';
-//   const lowerCaseStr = string.toLowerCase().replace(/[^a-z]/g, "");
+//   const lowerCaseStr = string.toLowerCase().replace(/[^a-zA-Z0-9]/g, "");
 //   for(let i = 0 ; i< lowerCaseStr.length; i++){
 //     const char = lowerCaseStr.charAt(i);
 //     stack.push(char);
 //   }
-//   let node = stack.top;
-//   while(node !== null){
+
+//   while(stack.top !== null){
 //     reverseStr += stack.pop();
-//     node = node.next;
 //   }
-//   console.log(reverseStr);
+
 //   if(reverseStr === lowerCaseStr){
 //     return true;
 //   }
@@ -72,7 +72,7 @@ function displayStack(stack){
 // }
 
 function isPalindrome(string, stack){
-  const lowerCaseStr = string.toLowerCase().replace(/[^a-z0-9]/g, "");
+  const lowerCaseStr = string.toLowerCase().replace(/[^a-zA-Z0-9]/g, "");
   for(let i = 0 ; i< lowerCaseStr.length; i++){
     const char = lowerCaseStr.charAt(i);
     stack.push(char);
@@ -87,39 +87,97 @@ function isPalindrome(string, stack){
   return true;
 }
 
+function isParenBalanced(string, stack){
+  for(let i = 0 ; i < string.length; i++){
+    const char = string.charAt(i);
+    if(char === '(' || char === '[' || char === '{'){
+      stack.push({char, index:i});
+    }
+    else{
+      const topOfStack = peek(stack);
+      if(topOfStack !== null){
+        if(topOfStack.char === '('){
+          if(char === ')'){
+            stack.pop();
+          }
+          else if (char === ']' || char === '}'){
+            throw new Error(`At index ${i}, Expected: ) Found: ${char}`);
+          }
+          else{
+            throw new Error(`At index ${topOfStack.index}, there are no closing parenthesis for ${topOfStack.char}`);
+          }
+        }
+        else if(topOfStack.char === '['){
+          if(char === ']'){
+            stack.pop();
+          }
+          else if (char === ')' || char === '}'){
+            throw new Error(`At index ${i}, Expected: ] Found: ${char}`);
+          }
+          else{
+            throw new Error(`At index ${topOfStack.index}, there are no closing brackets for ${topOfStack.char}`);
+          }
+        }
+        else if(topOfStack.char === '{'){
+          if(char === '}'){
+            stack.pop();
+          }
+          else if (char === ')' || char === ']'){
+            throw new Error(`At index ${i}, Expected: } Found: ${char}`);
+          }
+          else{
+            throw new Error(`At index ${topOfStack.index}, there are no closing curly brackets for ${topOfStack.char}`);
+          }
+        }
+      }
+      else{
+        throw new Error(`At index ${i}, there are no open parenthesis for ${char}`);
+      }
+    }
+  }
+  return true;
+}
+
 ///////////////////////////////////////////Testing ////////////////////////////////////
-console.log('////////////////////////');
-console.log('Stack');
-console.log('////////////////////////');
-const s = new Stack();
-s.push(1);
-s.push(2);
-s.push(3);
-console.log('////////////////////////');
-console.log('Stack Pop');
-console.log('////////////////////////');
-console.log(s.pop());
+// console.log('////////////////////////');
+// console.log('Stack');
+// console.log('////////////////////////');
+// const s = new Stack();
+// s.push(1);
+// s.push(2);
+// s.push(3);
+// console.log('////////////////////////');
+// console.log('Stack Pop');
+// console.log('////////////////////////');
+// console.log(s.pop());
+
+// console.log('////////////////////////');
+// console.log('Stack after pop');
+// console.log('////////////////////////');
+// console.log(s);
+
+// console.log('////////////////////////');
+// console.log('Stack Peek');
+// console.log('////////////////////////');
+// console.log(peek(s));
+
+// console.log('////////////////////////');
+// console.log('Stack Display');
+// console.log('////////////////////////');
+// console.log(displayStack(s));
+
+// console.log('////////////////////////');
+// console.log('Stack Palindrome');
+// console.log('////////////////////////');
+// const s1 = new Stack();
+// console.log(isPalindrome('dad',s1));
+// console.log(isPalindrome('A man a plan a canal Panama', s1));
+// console.log(isPalindrome('1001',s1));
+// console.log(isPalindrome('10011',s1));
 
 console.log('////////////////////////');
-console.log('Stack after pop');
+console.log('Stack Paren');
 console.log('////////////////////////');
-console.log(s);
-
-console.log('////////////////////////');
-console.log('Stack Peek');
-console.log('////////////////////////');
-console.log(peek(s));
-
-console.log('////////////////////////');
-console.log('Stack Display');
-console.log('////////////////////////');
-console.log(displayStack(s));
-
-console.log('////////////////////////');
-console.log('Stack Palindrome');
-console.log('////////////////////////');
-const s1 = new Stack();
-console.log(isPalindrome('dad',s1));
-console.log(isPalindrome('A man a plan a canal Panama', s1));
-console.log(isPalindrome('1001',s1));
-console.log(isPalindrome('10011',s1));
+const s2 = new Stack();
+console.log(isParenBalanced('(())', s2));
+console.log(isParenBalanced('{([({})])}', s2));
