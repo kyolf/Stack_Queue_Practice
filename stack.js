@@ -141,12 +141,111 @@ function isParenBalanced(string, stack){
 function sortStack(needSortStack){
   const tempStack = new Stack();
   let temp;
-  //let stackSortPointer = needSortStack.first;
-  while(needSortStack.first !== null){
-    if(!peek(tempStack)){
-      
+  
+//  let stackSortPointer = needSortStack.first;
+  while(needSortStack.top !== null){
+    if(needSortStack.top.next !== null){
+      if(!temp){
+        if(needSortStack.top.next.data > peek(needSortStack)){
+          if(!peek(tempStack)){
+            temp = needSortStack.pop();
+            tempStack.push(needSortStack.pop());
+          }
+          else{
+            if(peek(needSortStack) > peek(tempStack)){
+              temp = needSortStack.pop();
+              needSortStack.push(tempStack.pop());
+            }
+            else{
+              tempStack.push(needSortStack.pop());
+            }
+          }
+        }
+        else{
+          if(!peek(tempStack)){
+            tempStack.push(needSortStack.pop());
+          }
+          else{
+            if(peek(tempStack) >= peek(needSortStack)){
+              tempStack.push(needSortStack.pop());
+            }
+            else{
+              temp = needSortStack.pop();
+            }
+          }
+        }
+      }
+      else{
+        if(peek(tempStack) || peek(tempStack) === 0){
+        //2 3 4
+          if(temp >= peek(needSortStack) && temp <= peek(tempStack)){
+            tempStack.push(temp);
+            temp = null;
+          }
+          //3 4 3
+          else if(temp >= peek(needSortStack) && temp > peek(tempStack)){
+            needSortStack.push(tempStack.pop());
+          }
+          //4 2 3
+          else if(temp < peek(needSortStack) && temp < peek(tempStack)){
+            if(peek(needSortStack) > peek(tempStack) ){
+              tempStack.push(temp);
+              temp = null;
+            }
+            //3 2 4
+            else{
+              tempStack.push(needSortStack.pop());
+            }
+          }
+          //3 2 2
+          else if(temp < peek(needSortStack) && temp === peek(tempStack)){
+            tempStack.push(temp);
+            temp = needSortStack.pop();
+          }
+          //3 2 1
+          else if(temp < peek(needSortStack) && temp > peek(tempStack)){
+            needSortStack.push(tempStack.pop());
+          }
+        }
+        else{
+          //2 1 null
+          if(peek(needSortStack) > temp){
+            tempStack.push(needSortStack.pop());
+          }
+          //1 1 null or 1 2 null
+          else{
+            tempStack.push(temp);
+            temp = null;
+          }
+        }
+      }
+    }
+    else{
+      //1 null 3 or 3 null 3
+      if(!temp){
+        if(peek(tempStack) >= peek(needSortStack)){
+          tempStack.push(needSortStack.pop());
+        }
+        //3 null 1
+        else{
+          temp = needSortStack.pop();
+          needSortStack.push(tempStack.pop());
+        }
+      }
+      else{
+        //1 3 2
+        if(temp > peek(needSortStack) && temp > peek(tempStack)){
+          needSortStack.push(tempStack.pop());
+        }
+        //1 3 3
+        else if(temp > peek(needSortStack) && temp <= peek(tempStack)){
+          tempStack.push(temp);
+          temp = null;
+        } 
+      }
     }
   }
+  return tempStack;
 }
 
 function queueWithTwoStack(inStack, outStack){
@@ -217,5 +316,9 @@ console.log('////////////////////////');
 const s5 = new Stack();
 s5.push(3);
 s5.push(1);
+s5.push(3);
+s5.push(1);
 s5.push(2);
 s5.push(4);
+// s5.push(1);
+console.log(sortStack(s5));
